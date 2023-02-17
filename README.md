@@ -1,4 +1,4 @@
-# iter
+# iter [![Go Reference](https://pkg.go.dev/badge/github.com/alextanhongpin/iter.svg)](https://pkg.go.dev/github.com/alextanhongpin/iter)
 
 
 Implements generic `map`, `reduce` and `filter` function in golang.
