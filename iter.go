@@ -9,6 +9,10 @@ type Result[T any] struct {
 	Error error
 }
 
+func (r *Result[T]) Unwrap() (T, error) {
+	return r.Data, r.Error
+}
+
 func MapIndex[T any, V any](ts []T, fn func(int) V) []V {
 	res := make([]V, len(ts))
 	for i := 0; i < len(ts); i++ {

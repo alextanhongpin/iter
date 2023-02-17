@@ -67,17 +67,16 @@ func TestLazyLoading(t *testing.T) {
 	}
 
 	// Wait for all photos to fetch.
-	photos := iter.GoMapIndexFlat(posts, func(i int) []*photo {
+	iter.GoEachIndex(posts, func(i int) {
 		photos := fetchPhotos(posts[i])
 		posts[i].photos = photos
-		return photos
 	})
 
 	// Wait for all tags to fetch.
-	iter.GoEachIndex(photos, func(j int) {
-		tags := fetchTags(photos[j])
-		photos[j].tags = tags
-		fmt.Println("done fetching tags", j)
+	iter.GoEachIndex(posts, func(i int) {
+		iter.GoEachIndex(posts[i].photos, func(j int) {
+			posts[i].photos[j].tags = fetchTags(posts[i].photos[j])
+		})
 	})
 
 	t.Log(time.Since(start))
